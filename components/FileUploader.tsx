@@ -6,6 +6,10 @@ import {cn, convertFileToUrl} from "@/lib/utils";
 import Image from "next/image";
 import {getFileType} from "@/lib/utils";
 import Thumbnail from "@/components/Thumbnail";
+import {MAX_FILE_SIZE} from "@/constants";
+import { toast } from "sonner"
+import {usePathname} from "next/navigation";
+import {uploadFile} from "@/lib/actions/file.actions";
 
 interface  Props{
     ownerId:string;
@@ -14,12 +18,41 @@ interface  Props{
 }
 
 const FileUploader = ({ownerId,accountId,className}:Props) => {
+
+    const path=usePathname()
     const [files, setFiles] = React.useState([]);
 
     const onDrop = useCallback( async (acceptedFiles : File[]) => {
         setFiles(acceptedFiles);
-    }, [])
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
+        const uploadPromises=acceptedFiles.map(async (file)=>{
+            if(file.size>MAX_FILE_SIZE){
+                setFiles((prevFiles)=>
+                    prevFiles.filter((f)=>
+                        f.name!==file.name));
+
+                toast(
+                    <p className="body-2  text-white">
+                        <span className="font-semibold">{file.name}</span> is too large.
+                        Max file size is 50MB.
+                    </p>,
+                    {
+                        className: 'error-toast',
+                    });
+            }
+            return uploadFile({file,ownerId,accountId,path}).then(
+                (uploadedFile)=>{
+                    if(uploadedFile){
+                        setFiles((prevFiles)=>
+                        prevFiles.filter((f)=>f.name!==file.name),
+                        );
+                    }
+                },
+            )
+        })
+        await Promise.all(uploadPromises);
+    }, [ownerId,accountId,path])
+    const {getRootProps, getInputProps} = useDropzone({onDrop})
 
     const handleRemoveFile = (e:React.MouseEvent<HTMLImageElement,MouseEvent>,fileName:string)=>{
         e.stopPropagation();
@@ -52,11 +85,7 @@ const FileUploader = ({ownerId,accountId,className}:Props) => {
                     })}
                 </ul>
             )}
-            {
-                isDragActive ?
-                    <p>Drop the files here ...</p> :
-                    <p>Drag 'n' drop some files here, or click to select files</p>
-            }
+
         </div>
     )
 }
