@@ -1,6 +1,5 @@
 "use client"
-import React from 'react';
-import { useState } from 'react';
+import React, {useState} from 'react';
 import {
     Dialog,
     DialogContent,
@@ -26,8 +25,8 @@ import {constructFileUrl} from "@/lib/utils";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {usePathname} from "next/navigation";
-import {renameFile} from "@/lib/actions/file.actions";
-import {FileDetails} from "@/components/ActionModalContent";
+import {deleteFile, renameFile, updateFileUsers} from "@/lib/actions/file.actions";
+import {FileDetails,ShareInput} from "@/components/ActionModalContent";
 
 const ActionDropdown = ({file}:{file:Models.Document}) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -36,6 +35,7 @@ const ActionDropdown = ({file}:{file:Models.Document}) => {
     const [name,setName]=useState(file.name);
     const [isLoading,setIsLoading]=useState(false);
     const path=usePathname()
+    const [emails, setEmails] = useState<string[]>([])
 
     const closeAllModals=()=>{
         setIsModalOpen(false);
@@ -52,12 +52,24 @@ const ActionDropdown = ({file}:{file:Models.Document}) => {
          const actions={
              rename:()=>
                  renameFile({fileId:file.$id,name,extension:file.extension,path}),
-             share:()=> console.log("share"),
-             delete:()=> console.log("delete"),
+             share:()=> updateFileUsers({fileId:file.$id,emails,path}),
+             delete:()=> deleteFile({fileId:file.$id,path,bucketFileId:file.bucketFileId}),
          };
          success=await actions[action.value as keyof typeof actions]();
          if (success) closeAllModals();
          setIsLoading(false);
+    }
+
+    const handleRemoveUser=async(email:string)=>{
+        const updatedEmails=emails.filter((e)=> e!== email);
+
+        const success=await updateFileUsers({
+            fileId:file.$id,
+            emails:updatedEmails,
+            path,
+        });
+        if(success) setEmails(updatedEmails);
+        closeAllModals();
     }
 
     const renderDialogContent=()=>{
@@ -73,8 +85,15 @@ const ActionDropdown = ({file}:{file:Models.Document}) => {
                     </DialogTitle>
                     {value==='rename' && (<Input type='text' value={name} onChange={(e)=>setName(e.target.value)} />)}
                     {value==='details' && <FileDetails file={file} />}
+                    {value==='share' && <ShareInput file={file} onInputChange={setEmails} onRemove={handleRemoveUser} />}
+                    {value==='delete' && (
+                        <p className='delete-confirmation'>
+                            Are you sure you want to delete{` `}
+                            <span className='delete-file-name'>{file.name}</span>
+                        </p>
+                    )}
                 </DialogHeader>
-                {["rename","share"].includes(value) && (
+                {["rename","share","delete"].includes(value) && (
                     <DialogFooter className='flex flex-col gap-3 md:flex-row'>
                         <Button className='modal-cancel-button' onClick={closeAllModals}>
                             Cancel
