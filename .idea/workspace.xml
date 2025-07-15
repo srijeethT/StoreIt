@@ -7,11 +7,15 @@
     <list default="true" id="9ad5f242-69e5-4b98-9f92-1a1111e6b1ab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(root)/[type]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(root)/[type]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(root)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(root)/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(root)/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(root)/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ActionDropdown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ActionDropdown.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ActionModalContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ActionModalContent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Search.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/FormattedDateTime.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FormattedDateTime.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/MobileNavigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/MobileNavigation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Thumbnail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Thumbnail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/sort.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/sort.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/actions/file.actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/actions/file.actions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
@@ -104,7 +108,8 @@
       <workItem from="1752221344165" duration="10574000" />
       <workItem from="1752323714267" duration="6416000" />
       <workItem from="1752406018017" duration="6886000" />
-      <workItem from="1752477650786" duration="14425000" />
+      <workItem from="1752477650786" duration="15730000" />
+      <workItem from="1752561127758" duration="6228000" />
     </task>
     <servers />
   </component>

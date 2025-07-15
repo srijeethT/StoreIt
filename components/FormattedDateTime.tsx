@@ -1,7 +1,7 @@
 import React from "react";
 import {cn, formatDateTime} from "@/lib/utils";
 
-const FormattedDateTime =({
+export const FormattedDateTime =({
 date, className
 }: {
     date:string,
